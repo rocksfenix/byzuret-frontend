@@ -1,0 +1,15 @@
+# Files to UX
+ux
+
+# Dependency directories
+node_modules
+
+# Optional npm cache directory
+.npm
+
+# dotenv environment variable files
+.env*
+
+# gatsby files
+.cache/
+public
