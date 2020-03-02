@@ -1,3 +1,8 @@
+// Config env var .env
+require('dotenv').config()
+
+const DESINGS_API = process.env.DESINGS_API || 'http://localhost:4000/designs'
+
 module.exports = {
   siteMetadata: {
     title: 'ByZuret Jeans',
@@ -33,9 +38,7 @@ module.exports = {
     {
       resolve: 'gatsby-source-rest-api',
       options: {
-        endpoints: [
-          'http://localhost:4000/api/designs'
-        ]
+        endpoints: [DESINGS_API]
       }
     },
     {

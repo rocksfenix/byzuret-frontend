@@ -17,8 +17,7 @@ exports.onCreateWebpackConfig = ({ getConfig, stage }) => {
 }
 
 exports.onCreateNode = ({ node, getNode, actions }) => {
-  if (node.internal.type === 'RestApiApiDesigns') {
-    // console.log('*****>>>>  ', node.designs.length)
+  if (node.internal.type === 'RestApiDesigns') {
     const { createNodeField } = actions
     node.designs.forEach(design => (
       createNodeField({
@@ -35,7 +34,7 @@ exports.createPages = async ({ graphql, actions }) => {
   // see: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise for more info
   const result = await graphql(`
     query {
-      allRestApiApiDesigns {
+      allRestApiDesigns {
         edges {
           node {
             designs {
@@ -49,7 +48,7 @@ exports.createPages = async ({ graphql, actions }) => {
 
   const { createPage } = actions
 
-  result.data.allRestApiApiDesigns.edges[0].node.designs.forEach((design) => {
+  result.data.allRestApiDesigns.edges[0].node.designs.forEach((design) => {
     createPage({
       path: `/design/${design._id}`,
       component: path.resolve('./src/templates/design.js'),

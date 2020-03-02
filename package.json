@@ -33,6 +33,7 @@
   },
   "dependencies": {
     "axios": "^0.19.2",
+    "dotenv": "^8.2.0",
     "formik": "^2.1.4",
     "gatsby": "^2.19.23",
     "gatsby-plugin-create-client-paths": "^2.1.22",
