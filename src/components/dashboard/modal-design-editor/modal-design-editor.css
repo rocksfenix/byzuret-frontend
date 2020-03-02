@@ -1,0 +1,21 @@
+
+.slide-enter {
+  opacity: 0.01;
+  transform: scale(1.3);
+}
+
+.slide-enter.slide-enter-active {
+  opacity: 1;
+  transition: all 1000ms ease;
+  transform: scale(1);
+}
+
+.slide-exit {
+  opacity: 1;
+}
+
+.slide-exit.slide-exit-active {
+  opacity: 0.01;
+  transition: all 600ms ease;
+  transform: scale(0.8);
+}

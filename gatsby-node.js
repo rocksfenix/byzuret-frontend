@@ -19,6 +19,10 @@ exports.onCreateWebpackConfig = ({ getConfig, stage }) => {
 exports.onCreateNode = ({ node, getNode, actions }) => {
   if (node.internal.type === 'RestApiDesigns') {
     const { createNodeField } = actions
+
+    // Avoid error if not exists desings yet
+    if (!node.designs) return
+
     node.designs.forEach(design => (
       createNodeField({
         node,
@@ -47,6 +51,9 @@ exports.createPages = async ({ graphql, actions }) => {
   `)
 
   const { createPage } = actions
+
+  // Avoid error if not exists desings yet
+  if (!result.data) return
 
   result.data.allRestApiDesigns.edges[0].node.designs.forEach((design) => {
     createPage({

@@ -2,6 +2,7 @@ import React from 'react'
 import styled from 'styled-components'
 import Layout from '../components/layout'
 import Grid from '../components/grid'
+import { graphql, Link } from 'gatsby'
 
 const Box = styled.div`
   width: 100%;
@@ -9,20 +10,37 @@ const Box = styled.div`
   background: gray;
 `
 
-export default () => {
+export default (props) => {
+  const { designs } = props.data.allRestApiDesigns.edges[0].node
+
   return (
     <Layout>
       <Grid>
-        <Box>Hey 1</Box>
-        <Box>Hey 2</Box>
-        <Box>Hey 3</Box>
-        <Box>Hey 4</Box>
-        <Box>Hey 5</Box>
-        <Box>Hey 6</Box>
-        <Box>Hey 7</Box>
-        <Box>Hey 8</Box>
-        <Box>Hey 9</Box>
+        {designs.map(design => (
+          <Link key={design._id} to={'/design/' + design._id}>
+            <Box>{design.title}</Box>
+          </Link>
+        ))}
       </Grid>
     </Layout>
   )
 }
+
+export const pageQuery = graphql`
+  {
+    allRestApiDesigns {
+      edges {
+        node {
+          designs {
+            _id
+            title
+            # images {
+            #   _id
+            #   secure_url
+            # }
+          }
+        }
+      }
+    }
+  }
+`

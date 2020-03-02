@@ -32,6 +32,7 @@
     "standard": "^14.3.1"
   },
   "dependencies": {
+    "array-move": "^2.2.1",
     "axios": "^0.19.2",
     "dotenv": "^8.2.0",
     "formik": "^2.1.4",
@@ -46,9 +47,16 @@
     "prop-types": "^15.7.2",
     "react": "^16.13.0",
     "react-dom": "^16.13.0",
+    "react-dropzone": "^10.2.1",
     "react-grid-system": "^6.2.4",
     "react-headroom": "^3.0.0",
     "react-helmet": "^5.2.1",
+    "react-image-magnify": "^2.7.4",
+    "react-infinite-scroll-component": "^5.0.4",
+    "react-sortable-hoc": "^1.11.0",
+    "react-spinners": "^0.8.0",
+    "react-transition-group": "^4.3.0",
+    "semantic-ui-react": "^0.88.2",
     "styled-components": "^5.0.1"
   }
 }

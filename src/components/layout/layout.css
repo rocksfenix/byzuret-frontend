@@ -1,5 +1,15 @@
 @import url('https://fonts.googleapis.com/css?family=Source+Sans+Pro&display=swap');
 
+::-moz-selection { /* Code for Firefox */
+  color: #FFF;
+  background: orangered;
+}
+
+::selection {
+  color: #FFF;
+  background: orangered;
+}
+
 html {
   font-family: sans-serif;
   -ms-text-size-adjust: 100%;
