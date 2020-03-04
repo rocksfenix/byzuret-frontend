@@ -29,6 +29,7 @@ export default (props) => {
     const res = await api.Design.post({ title })
     setDesigns([res.design, ...designs])
     setTotal(total + 1)
+    setTitle('')
   }
 
   const onUpdateDesign = async () => {

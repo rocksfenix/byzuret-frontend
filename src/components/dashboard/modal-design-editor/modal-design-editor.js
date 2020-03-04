@@ -3,7 +3,7 @@ import styled, { keyframes } from 'styled-components'
 import DropZone from './dropzone'
 import arrayMove from 'array-move'
 import Gallery from './gallery'
-import { Form } from 'semantic-ui-react'
+import { Form, Label } from 'semantic-ui-react'
 import { DashboardContext } from '../../../context/dashboard-context'
 import './modal-design-editor.css'
 
@@ -25,6 +25,8 @@ const Panel = styled.div`
   top: 0;
   animation: ${animaPanel} 700ms ease forwards;
   overflow-y: auto;
+  color: #FFF;
+  padding-top: 1em;
 `
 
 const anima = keyframes`
@@ -42,16 +44,14 @@ const PanelSide = styled.div`
   width: 30%;
   height: 100vh;
   min-width: 750px;
-  background: #FFF;
-  animation: ${anima} 230ms ease forwards;
+  background: #252525;
+  animation: ${anima} 300ms ease forwards;
   will-change: transform;
 `
 
 const Content = styled.div`
   padding: 1em;
-  background: #FFF;
-  box-shadow: 2px 0px 13px 1px #03d3f4;
-  height: 100%;
+  background: #252525;
 `
 
 const ModalEditor = () => {
@@ -83,6 +83,10 @@ const ModalEditor = () => {
     onSortImages(images)
   }
 
+  const handlerChange = (name, event, { value }) => {
+    setDesign(name, value)
+  }
+
   return (
     <Panel onClick={() => setIsOpenEditor(false)}>
       <PanelSide onClick={e => e.stopPropagation()}>
@@ -92,7 +96,9 @@ const ModalEditor = () => {
               // console.log(e.target)
               onUpdateDesign()
             }}
+            size='large'
             loading={isFetching}
+            inverted
           >
             <Form.Group>
               <Form.Input
@@ -100,22 +106,37 @@ const ModalEditor = () => {
                 placeholder='Title'
                 value={design.title}
                 width={8}
-                onChange={(e, { value }) => setDesign('title', value)}
+                onChange={handlerChange.bind(this, 'title')}
               />
+
               <Form.Input
                 label='Price'
+                type='number'
                 placeholder='Price'
                 width={4}
                 value={design.price}
-                onChange={(e, { value }) => setDesign('price', value)}
-              />
+                onChange={handlerChange.bind(this, 'price')}
+                labelPosition='right'
+              >
+                <Label basic>$</Label>
+                <input />
+                <Label>.00</Label>
+              </Form.Input>
+
               <Form.Input
                 label='Lote Price'
                 placeholder='Lote Price'
                 width={4}
                 value={design.lotePrice}
-                onChange={(e, { value }) => setDesign('lotePrice', value)}
-              />
+                type='number'
+                onChange={handlerChange.bind(this, 'lotePrice')}
+                labelPosition='right'
+              >
+                <Label basic>$</Label>
+                <input />
+                <Label>.00</Label>
+              </Form.Input>
+
             </Form.Group>
             <Form.Group>
               <Form.Input
@@ -123,39 +144,49 @@ const ModalEditor = () => {
                 placeholder='Colores'
                 width={8}
                 value={design.colors}
-                onChange={(e, { value }) => setDesign('colors', value)}
+                onChange={handlerChange.bind(this, 'colors')}
               />
               <Form.Input
                 label='Sizes'
                 placeholder='Tallas'
                 width={8}
                 value={design.sizes}
-                onChange={(e, { value }) => setDesign('sizes', value)}
+                onChange={handlerChange.bind(this, 'sizes')}
               />
             </Form.Group>
             <Form.Group>
+
               <Form.Input
                 label='Off'
-                placeholder='off'
+                placeholder='Off'
                 width={4}
                 value={design.off}
-                onChange={(e, { value }) => setDesign('off', value)}
-              />
+                type='number'
+                onChange={handlerChange.bind(this, 'off')}
+                labelPosition='right'
+              >
+                <input />
+                <Label basic>%</Label>
+              </Form.Input>
+
               <Form.Input
                 label='Composition'
                 placeholder='Composition'
                 width={12}
-                value={design.Composition}
-                onChange={(e, { value }) => setDesign('Composition', value)}
+                value={design.composition}
+                onChange={handlerChange.bind(this, 'composition')}
               />
+  
             </Form.Group>
             <Form.TextArea
               label='Description'
-              placeholder='Super elástico que dura de día a noche; ajuste cómodo que no pierde forma...'
+              placeholder='Hermoso Jeans ...'
               value={design.description}
-              onChange={(e, { value }) => setDesign('description', value)}
+              onChange={handlerChange.bind(this, 'description')}
             />
-            <Form.Button>Submit</Form.Button>
+            <Form.Button color='blue'>
+              Update
+            </Form.Button>
           </Form>
           <DropZone
             design={design}

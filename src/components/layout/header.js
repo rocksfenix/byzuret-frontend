@@ -1,5 +1,5 @@
 import React from 'react'
-import { Link } from 'gatsby'
+import { Link, navigate } from 'gatsby'
 import PropTypes from 'prop-types'
 import Headroom from 'react-headroom'
 import Img from '../../images/logo-byzuret.svg'
@@ -51,9 +51,10 @@ const Header = () => {
               <DashboardContext.Consumer>
                 {({ onLoggout, onRebuildApp }) => (
                   <div>
-                    <button>
+                    <button onClick={() => navigate('/dashboard')}>Dashboard</button>
+                    <span>
                       {user.fullname}
-                    </button>
+                    </span>
                     <button onClick={onLoggout}>Loggout</button>
                     <button onClick={onRebuildApp}>Re-Build</button>
                   </div>

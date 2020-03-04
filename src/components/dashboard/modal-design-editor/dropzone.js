@@ -47,7 +47,7 @@ export default ({ design, onUploadImageStart, onUploadImageEnd }) => {
         <section>
           <div {...getRootProps()}>
             <input {...getInputProps()} />
-            <p>Seleccionar Imagen</p>
+            <p>Upload an image</p>
           </div>
         </section>
       )}
