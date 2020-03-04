@@ -1,7 +1,8 @@
-import React from 'react'
+import React, { useState } from 'react'
 import styled from 'styled-components'
 import { SortableContainer, SortableElement } from 'react-sortable-hoc'
 import { CSSTransition, TransitionGroup } from 'react-transition-group'
+import { Icon } from 'semantic-ui-react'
 
 const Box = styled.li`
   width: 100%;
@@ -17,11 +18,19 @@ const Box = styled.li`
   position: relative;
   z-index: 100;
   position: relative;
-  overflow: hidden;
   font-size: 15px;
   box-sizing: border-box;
-  background: pink;
+  background: #e8e8e8;
   user-select: none;
+  transition: background 300ms ease;
+  cursor: move;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  :hover {
+    background: #97ffe7;
+  }
 `
 
 const BoxContainer = styled.div`
@@ -29,18 +38,48 @@ const BoxContainer = styled.div`
   background: #d7d7d7;
 `
 
+const Delete = styled.button`
+  position: absolute;
+  width: 30px;
+  height: 35px;
+  border: 0;
+  background: rgba(0,0,0,0.8);
+  right: -30px;
+  cursor: pointer;
+
+  & > i {
+    pointer-events: none;
+  }
+`
+
 const SortableItem = SortableElement((props) => {
+  const [isHover, setHover] = useState(false)
+
+  const hoverActive = () => setHover(true)
+  const hoverInactive = () => setHover(false)
+
   return (
-    <Box {...props}>
+    <Box
+      onMouseOver={hoverActive}
+      onMouseLeave={hoverInactive}
+      {...props}
+    >
       {props.image.isUploading && <div>...Upload</div>}
       <img
         src={props.image.secure_url}
         alt='foto'
         width={50}
       />
-      <button onClick={() => props.onDeleteImage(props.image)}>
-        X
-      </button>
+      {isHover && (
+        <Delete  onClick={(e) => {
+          props.onDeleteImage(props.image)
+        }}>
+          <Icon
+            name='trash alternate'
+            color='red'
+          />
+        </Delete>
+      )}
     </Box>
   )
 })

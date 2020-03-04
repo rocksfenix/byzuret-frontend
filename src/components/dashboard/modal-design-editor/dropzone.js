@@ -1,6 +1,18 @@
 import React from 'react'
 import Dropzone from 'react-dropzone'
 import api from '../../../util/api'
+import styled from 'styled-components'
+
+import { Icon, Button } from 'semantic-ui-react'
+
+
+const Box = styled.div`
+  width: 200px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 0 auto;
+`
 
 export default ({ design, onUploadImageStart, onUploadImageEnd }) => {
   const onDrop = async (files) => {
@@ -44,12 +56,10 @@ export default ({ design, onUploadImageStart, onUploadImageEnd }) => {
   return (
     <Dropzone onDrop={onDrop} accept='image/*'>
       {({ getRootProps, getInputProps }) => (
-        <section>
-          <div {...getRootProps()}>
-            <input {...getInputProps()} />
-            <p>Upload an image</p>
-          </div>
-        </section>
+        <Box {...getRootProps()}>
+          <input {...getInputProps()} />
+          <Button icon>Upload an image <Icon name='cloud upload' /></Button>
+        </Box>
       )}
     </Dropzone>
   )
