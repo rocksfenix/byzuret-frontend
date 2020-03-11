@@ -68,6 +68,7 @@ export const Design = {
   },
 
   async postImage ({ design, formData }, config) {
+    debugger
     const res = await axios.post(`${HOST}/design/${design._id}/image`, formData, {
       ...config,
       headers: {

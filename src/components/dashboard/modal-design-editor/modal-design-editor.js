@@ -1,9 +1,11 @@
 import React, { useContext } from 'react'
 import styled, { keyframes } from 'styled-components'
-import DropZone from './dropzone'
-import arrayMove from 'array-move'
-import Gallery from './gallery'
 import { Form, Label } from 'semantic-ui-react'
+import arrayMove from 'array-move'
+import disableScroll from 'disable-scroll'
+import ColorsEditor from '../../colors-editor'
+import DropZone from './dropzone'
+import Gallery from './gallery'
 import { DashboardContext } from '../../../context/dashboard-context'
 import './modal-design-editor.css'
 
@@ -21,7 +23,7 @@ const Panel = styled.div`
   width: 100vw;
   height: 100vh;
   background: rgba(0, 0, 0, 83);
-  z-index: 100;
+  z-index: 1000;
   top: 0;
   animation: ${animaPanel} 700ms ease forwards;
   overflow-y: auto;
@@ -47,6 +49,7 @@ const PanelSide = styled.div`
   background: #252525;
   animation: ${anima} 300ms ease forwards;
   will-change: transform;
+  overflow-y: auto;
 `
 
 const Content = styled.div`
@@ -56,6 +59,7 @@ const Content = styled.div`
 
 const ModalEditor = () => {
   const {
+    designInFocus: design,
     isOpenEditor,
     isFetching,
     setIsOpenEditor,
@@ -65,11 +69,24 @@ const ModalEditor = () => {
     onUploadImageStart,
     onUploadImageEnd,
     onRemoveImage,
-    designInFocus: design
+    onChangeColor,
+    onAddNewColor,
+    onConfirmColor,
+    onDeleteColor
 
   } = useContext(DashboardContext)
 
+  disableScroll.off()
+
   if (!isOpenEditor) return null
+
+  disableScroll.on(
+    document.getElementsByTagName('html')[0],
+    {
+      disableWheel: false,
+      disableKeys: false
+    }
+  )
 
   const setDesign = (key, value) => {
     setDesignInFocus({
@@ -93,7 +110,6 @@ const ModalEditor = () => {
         <Content>
           <Form
             onSubmit={(e) => {
-              // console.log(e.target)
               onUpdateDesign()
             }}
             size='large'
@@ -139,13 +155,7 @@ const ModalEditor = () => {
 
             </Form.Group>
             <Form.Group>
-              <Form.Input
-                label='Colors'
-                placeholder='Colores'
-                width={8}
-                value={design.colors}
-                onChange={handlerChange.bind(this, 'colors')}
-              />
+
               <Form.Input
                 label='Sizes'
                 placeholder='Tallas'
@@ -153,6 +163,14 @@ const ModalEditor = () => {
                 value={design.sizes}
                 onChange={handlerChange.bind(this, 'sizes')}
               />
+              <ColorsEditor
+                onChange={onChangeColor}
+                onAddNewColor={onAddNewColor}
+                onConfirmColor={onConfirmColor}
+                onDelete={onDeleteColor}
+                colors={design.colors}
+              />
+
             </Form.Group>
             <Form.Group>
 
@@ -176,7 +194,7 @@ const ModalEditor = () => {
                 value={design.composition}
                 onChange={handlerChange.bind(this, 'composition')}
               />
-  
+
             </Form.Group>
             <Form.TextArea
               label='Description'
@@ -192,6 +210,7 @@ const ModalEditor = () => {
             design={design}
             onUploadImageEnd={onUploadImageEnd}
             onUploadImageStart={onUploadImageStart}
+
           />
           <Gallery
             design={design}

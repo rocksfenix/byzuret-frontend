@@ -16,7 +16,7 @@ const Box = styled.li`
   justify-content: space-between;
   border-bottom: 1px solid #e6e6e6;
   position: relative;
-  z-index: 100;
+  z-index: 1000;
   position: relative;
   font-size: 15px;
   box-sizing: border-box;
@@ -36,6 +36,7 @@ const Box = styled.li`
 const BoxContainer = styled.div`
   width: 100px;
   background: #d7d7d7;
+  position: relative;
 `
 
 const Delete = styled.button`

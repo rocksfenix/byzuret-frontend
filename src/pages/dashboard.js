@@ -4,10 +4,10 @@ import ModalDesignEditor from '../components/dashboard/modal-design-editor'
 import DesingsList from '../components/dashboard/designs-list'
 import TopPanel from '../components/dashboard/top-panel'
 import Container from '../components/dashboard/container'
-import Context from '../context/dashboard-context'
+import DashboardContext from '../context/dashboard-context'
 
 const App = () => (
-  <Context>
+  <DashboardContext>
     <Layout title='Dashboard'>
       <ModalDesignEditor />
       <Container>
@@ -15,7 +15,7 @@ const App = () => (
         <DesingsList />
       </Container>
     </Layout>
-  </Context>
+  </DashboardContext>
 )
 
 export default App

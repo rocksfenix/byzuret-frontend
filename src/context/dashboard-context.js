@@ -32,8 +32,10 @@ export default (props) => {
     setTitle('')
   }
 
-  const onUpdateDesign = async () => {
-    setFetching(true)
+  const onUpdateDesign = async (showSpinner = true) => {
+    if (showSpinner) {
+      setFetching(true)
+    }
     const res = await api.Design.update(designInFocus)
     // Update in designs
     setDesigns(designs.map(_desing => {
@@ -43,20 +45,25 @@ export default (props) => {
 
       return _desing
     }))
-    setFetching(false)
+
+    if (showSpinner) {
+      setFetching(false)
+    }
   }
 
-  const onDeleteDesign = async (design) => {
-    const res = await api.Design.remove(design)
+  const onDeleteDesign = async (designToDelete) => {
+    const confirm = window.confirm('En verdad quieres eliminar el diseño y todas sus imagenes?')
+
+    if (!confirm) return
 
     setDesigns(
-      designs.filter(_desing => _desing._id !== res.design._id)
+      designs.filter(_desing => _desing._id !== designToDelete._id)
     )
     setTotal(total - 1)
+    await api.Design.remove(designToDelete)
   }
 
   // Handlers for images
-
   const onSortImages = async (images) => {
     const designUpdated = {
       ...designInFocus,
@@ -110,9 +117,22 @@ export default (props) => {
     }))
   }
 
-  const onRemoveImage = async (image) => {
-    const res = await api.Image.deleteById(image._id)
-    console.log(res)
+  const onRemoveImage = async (imageToDelete) => {
+    const confirm = window.confirm('En verdad quieres eliminar la imagen?')
+
+    if (!confirm) return
+
+    // Update local state
+    const designUpdated = {
+      ...designInFocus,
+      images: designInFocus.images.filter(image => {
+        return image._id !== imageToDelete._id
+      })
+    }
+
+    setDesignInFocus(designUpdated)
+
+    await api.Image.deleteById(imageToDelete._id)
   }
 
   const openEditor = (design) => {
@@ -127,6 +147,49 @@ export default (props) => {
   const onRebuildApp = async () => {
     const res = await api.General.rebuild()
     console.log(res)
+  }
+
+  const onChangeColor = async (indexInFocus, newColor) => {
+    const designUpdated = {
+      ...designInFocus,
+      colors: designInFocus.colors.map((color, index) => {
+        if (indexInFocus === index) {
+          return newColor
+        }
+        return color
+      })
+    }
+
+    setDesignInFocus(designUpdated)
+  }
+
+  const onConfirmColor = (indexInFocus, newColor) => {
+    // Do more thinks here
+    onUpdateDesign(false)
+  }
+
+  const onAddNewColor = (newColor) => {
+    const designUpdated = {
+      ...designInFocus,
+      colors: [
+        ...designInFocus.colors,
+        newColor
+      ]
+    }
+
+    setDesignInFocus(designUpdated)
+  }
+
+  const onDeleteColor = (indexToRemove) => {
+    const designUpdated = {
+      ...designInFocus,
+      colors: designInFocus.colors.filter((color, index) => {
+        return index !== indexToRemove
+      })
+    }
+
+    setDesignInFocus(designUpdated)
+    onUpdateDesign(false)
   }
 
   return (
@@ -152,6 +215,11 @@ export default (props) => {
       onPostDesign,
       onUpdateDesign,
       onDeleteDesign,
+      // Colors
+      onChangeColor,
+      onAddNewColor,
+      onConfirmColor,
+      onDeleteColor,
       // Images
       onSortImages,
       onUploadImageStart,

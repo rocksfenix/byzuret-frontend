@@ -17,7 +17,6 @@ const Item = styled.div`
 const DesignsList = () => {
   const { designs, loadMore, hasMore, openEditor, onDeleteDesign, total } = useContext(DashboardContext)
 
-
   return (
     <InfiniteScroll
       dataLength={designs.length}
@@ -36,29 +35,29 @@ const DesignsList = () => {
         </Table.Header>
 
         <Table.Body>
-            {designs.map(design => (
-              <Table.Row  key={design._id} onDoubleClick={() => openEditor(design)}>
-                <Table.Cell>$ {design.price}.00</Table.Cell>
-                <Table.Cell>{design.title}</Table.Cell>
-                <Table.Cell>{design.images.length > 0 && <img src={design.images[0].secure_url} alt='diseño pantalon' width={30} />}</Table.Cell>
-                <Table.Cell>
-                  <Button icon basic color='red'>
-                    <Icon name='trash alternate' />
-                  </Button>
-                </Table.Cell>
-              </Table.Row>
-              // <Item>
-              //   <button onClick={() => openEditor(design)}>
-              //     <i className='icon-pencil2' />
-              //   </button>
-              //   <span>{design.title}</span>
-              //   {design.images.length > 0 && <img src={design.images[0].secure_url} alt='diseño pantalon' width={30} />}
-              //   <button onClick={() => onDeleteDesign(design)}>
-              //     DELETE
-              //   </button>
-              // </Item>
-            ))}
-              
+          {designs.map(design => (
+            <Table.Row key={design._id} onDoubleClick={() => openEditor(design)}>
+              <Table.Cell>$ {design.price}.00</Table.Cell>
+              <Table.Cell>{design.title}</Table.Cell>
+              <Table.Cell>{design.images.length > 0 && <img src={design.images[0].secure_url} alt='diseño pantalon' width={50} />}</Table.Cell>
+              <Table.Cell>
+                <Button icon basic color='red' onClick={() => onDeleteDesign(design)}>
+                  <Icon name='trash alternate' />
+                </Button>
+              </Table.Cell>
+            </Table.Row>
+            // <Item>
+            //   <button onClick={() => openEditor(design)}>
+            //     <i className='icon-pencil2' />
+            //   </button>
+            //   <span>{design.title}</span>
+            //   {design.images.length > 0 && <img src={design.images[0].secure_url} alt='diseño pantalon' width={30} />}
+            //   <button onClick={() => onDeleteDesign(design)}>
+            //     DELETE
+            //   </button>
+            // </Item>
+          ))}
+
         </Table.Body>
       </Table>
     </InfiniteScroll>
