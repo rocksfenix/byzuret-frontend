@@ -71,10 +71,11 @@ const SizesList = styled.div`
 
 const ColorBall = styled.span`
   border-radius: 50%;
-  width: 26px;
-  height: 26px;
+  width: 20px;
+  height: 20px;
   display: block;
-  border: 1px solid gray;
+  display: inline-block;
+  margin: 0 0.1em;
 `
 
 const Button = styled.button`
@@ -160,13 +161,18 @@ export default (props) => {
             {design.description}
           </p>
           <div>
-        Colores
+            Colores
           </div>
           <div>
-            <ColorBall style={{ background: '#157bc6' }} />
+            {design.colors.map((color, index) => (
+              <ColorBall
+                key={index}
+                style={{ background: color }}
+              />
+            ))}
           </div>
           <div>
-        Tallas
+            Tallas
           </div>
           <SizesList>
             {design.sizes.split('-').map((size) => (
@@ -176,7 +182,10 @@ export default (props) => {
           <div>
             Precios especiales a mayoristas, hasta el 50% off
           </div>
-          <Button>Solicitar Informacion</Button>
+          <ButtonLink href='https://wa.me/5214751314921?texto=Me%20interesa%20in%20el%20auto%20que%20vendes' target='_blank'>
+            Chatear por Whatsapp <ImageIcon src={imgWhatsapp} alt='Whatsapp icon' />
+          </ButtonLink>
+          <Button>Solicitar Informacion por Email</Button>
           <FloatPanel parentRef={infoRef}>
             <h1>{design.title}</h1>
             <div>
@@ -193,10 +202,6 @@ export default (props) => {
                 <SizeBox key={size}>{size}</SizeBox>
               ))}
             </SizesList>
-            {/* <Button>
-              Solicitar Informacion []
-            </Button> */}
-
             <div>
               Solicita Informacion sin compromiso:
             </div>
