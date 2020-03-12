@@ -11,6 +11,8 @@ import { useStaticQuery, graphql } from 'gatsby'
 import Footer from './footer'
 import Header from './header'
 import GeneralContext from '../../context/general-context'
+import BurguerMenu from './burger-menu'
+
 // Icons
 import '../../styles/icomoon/style.css'
 import './layout.css'
@@ -28,6 +30,7 @@ const Layout = ({ children }) => {
 
   return (
     <GeneralContext>
+      <BurguerMenu />
       <Header siteTitle={data.site.siteMetadata.title} />
       <main>{children}</main>
       <Footer>

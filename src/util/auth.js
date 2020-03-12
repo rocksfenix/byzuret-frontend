@@ -20,7 +20,7 @@ export const logout = () => {
   removeItem('token')
   removeItem('refreshToken')
   removeItem('user')
-  document.location.replace('/login')
+  document.location.replace('/?signout=succesfully')
 }
 
 export const signin = ({ user, token, refreshToken }) => {

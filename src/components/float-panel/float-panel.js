@@ -64,7 +64,7 @@ const FloatPanel = ({ children, parentRef }) => {
       setFloatPanel(true)
 
       if (isShowNavbar) {
-        setTopPanel(80)
+        setTopPanel(95)
       } else {
         setTopPanel(10)
       }

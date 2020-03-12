@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react'
 import { navigate } from 'gatsby'
-import { getIsLoggedIn, getCurrentUser, logout } from '../util/auth'
-import api from '../util/api'
+import { getIsLoggedIn, getCurrentUser } from '../util/auth'
 import useDesigns from '../hooks/useDesigns'
+import api from '../util/api'
 
 export const DashboardContext = React.createContext()
 
@@ -19,7 +19,7 @@ export default (props) => {
   // Hook is necessary to avoid
   // breaking the gatsby build
   useEffect(() => {
-    if (!isLoggedIn) {
+    if (!isLoggedIn || user.role !== 'admin') {
       navigate('/login')
     }
   }, [])
@@ -140,15 +140,6 @@ export default (props) => {
     setIsOpenEditor(true)
   }
 
-  const onLogout = () => {
-    logout()
-  }
-
-  const onRebuildApp = async () => {
-    const res = await api.General.rebuild()
-    console.log(res)
-  }
-
   const onChangeColor = async (indexInFocus, newColor) => {
     const designUpdated = {
       ...designInFocus,
@@ -225,9 +216,7 @@ export default (props) => {
       onUploadImageStart,
       onUploadImageEnd,
       onRemoveImage,
-      openEditor,
-      onLogout,
-      onRebuildApp
+      openEditor
     }}
     >
       {props.children}

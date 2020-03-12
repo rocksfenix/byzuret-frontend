@@ -1,83 +1,66 @@
 import React, { useContext } from 'react'
-import { Link, navigate } from 'gatsby'
+import { Link } from 'gatsby'
 import PropTypes from 'prop-types'
 import Headroom from 'react-headroom'
+import styled from 'styled-components'
 import Img from '../../images/logo-byzuret.svg'
 import { GeneralContext } from '../../context/general-context'
-// import { DashboardContext } from '../../context/dashboard-context'
-
 import Seo from './seo'
 
-const Header = () => {
-  const { isLoggedIn, user, isShowNavbar, setShowNavbar } = useContext(GeneralContext)
+const Header = styled.header`
+  background: linear-gradient(45deg, rgb(0, 0, 0), rgb(137, 33, 33));
+  margin-bottom: 1.45rem;
+  margin: '0 auto';
+  max-width: 960;
+  height: 85;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 7vw;
+  color: #FFF;
+  user-select: none;
+`
+
+const HeaderComponent = () => {
+  const { isLoggedIn, user, setShowNavbar } = useContext(GeneralContext)
 
   return (
     <Headroom
       onPin={() => setShowNavbar(true)}
       onUnpin={() => setShowNavbar(false)}
-      style={{
-        zIndex: 1000
-      }}
+      style={{ zIndex: 999 }}
     >
       <Seo />
-      <header
-        style={{
-          background: 'linear-gradient(45deg, rgb(0, 0, 0), rgb(137, 33, 33))',
-          marginBottom: '1.45rem'
-        }}
-      >
-        <div
+      <Header>
+        <Link
+          to='/'
           style={{
-            margin: '0 auto',
-            maxWidth: 960,
-            height: 75,
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'space-between'
+            color: 'white',
+            textDecoration: 'none'
           }}
         >
-          <Link
-            to='/'
-            style={{
-              color: 'white',
-              textDecoration: 'none'
-            }}
-          >
-            <img
-              src={Img}
-              alt='Logo ByZuret - Jeans'
-              style={{ height: '70px', marginTop: 10 }}
-            />
-
-          </Link>
-          {/* {isLoggedIn && (
-            <Context>
-              <DashboardContext.Consumer>
-                {({ onLoggout, onRebuildApp }) => (
-                  <div>
-                    <button onClick={() => navigate('/dashboard')}>Dashboard</button>
-                    <span>
-                      {user.fullname}
-                    </span>
-                    <button onClick={onLoggout}>Loggout</button>
-                    <button onClick={onRebuildApp}>Re-Build</button>
-                  </div>
-                )}
-              </DashboardContext.Consumer>
-            </Context>
-          )} */}
-        </div>
-      </header>
+          <img
+            src={Img}
+            alt='Logo ByZuret - Jeans'
+            style={{ height: '73px' }}
+          />
+        </Link>
+        {isLoggedIn && user.role === 'admin' && (
+          <div>
+            {user.fullname}
+          </div>
+        )}
+      </Header>
     </Headroom>
   )
 }
 
-Header.propTypes = {
+HeaderComponent.propTypes = {
   siteTitle: PropTypes.string
 }
 
-Header.defaultProps = {
+HeaderComponent.defaultProps = {
   siteTitle: ''
 }
 
-export default Header
+export default HeaderComponent
