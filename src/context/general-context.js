@@ -1,5 +1,4 @@
-import React, { useState, useEffect } from 'react'
-import { navigate } from 'gatsby'
+import React, { useState } from 'react'
 import { getIsLoggedIn, getCurrentUser, logout } from '../util/auth'
 import isMobile from 'ismobilejs'
 
@@ -10,14 +9,6 @@ export default (props) => {
 
   const isLoggedIn = getIsLoggedIn()
   const user = getCurrentUser()
-
-  // Hook is necessary to avoid
-  // breaking the gatsby build
-  useEffect(() => {
-    if (!isLoggedIn) {
-      navigate('/login')
-    }
-  }, [])
 
   return (
     <GeneralContext.Provider value={{
