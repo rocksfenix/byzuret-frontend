@@ -1,4 +1,4 @@
-import React, { useRef } from 'react'
+import React, { useRef, useState } from 'react'
 import { graphql } from 'gatsby'
 import styled from 'styled-components'
 import ReactImageMagnify from 'react-image-magnify'
@@ -6,6 +6,7 @@ import FloatPanel from '../components/float-panel'
 import Layout from '../components/layout'
 import imgWhatsapp from '../images/whatsapp.svg'
 import imgEmail from '../images/email.svg'
+import ModalContactForm from '../components/modal-contact-form'
 
 const Panel = styled.div`
   font-family: 'Source Sans Pro', sans-serif;
@@ -131,10 +132,24 @@ export default (props) => {
   const design = designs.find(d => d._id === _id)
   const infoRef = useRef()
   const { images } = design
+  const [showModalForm, setShowModalForm] = useState(false)
+
+  const onShowModalForm = () => {
+    setShowModalForm(true)
+  }
+
+  const onCloseModalForm = () => {
+    setShowModalForm(false)
+  }
 
   return (
     <Layout>
       <Panel>
+        <ModalContactForm
+          show={showModalForm}
+          onClose={onCloseModalForm}
+          design={design}
+        />
         <Images>
           {images && images.map(image => (
             <ReactImageMagnify
@@ -185,7 +200,9 @@ export default (props) => {
           <ButtonLink href='https://wa.me/5214751314921?texto=Me%20interesa%20in%20el%20auto%20que%20vendes' target='_blank'>
             Chatear por Whatsapp <ImageIcon src={imgWhatsapp} alt='Whatsapp icon' />
           </ButtonLink>
-          <Button>Solicitar Informacion por Email</Button>
+          <Button onClick={onShowModalForm}>
+            Solicitar Informacion por Email
+          </Button>
           <FloatPanel parentRef={infoRef}>
             <h1>{design.title}</h1>
             <div>

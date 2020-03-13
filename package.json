@@ -58,6 +58,7 @@
     "react-image-magnify": "^2.7.4",
     "react-infinite-scroll-component": "^5.0.4",
     "react-potrace": "0.0.2",
+    "react-recaptcha-v3": "^1.1.0",
     "react-sortable-hoc": "^1.11.0",
     "react-spinners": "^0.8.0",
     "react-transition-group": "^4.3.0",

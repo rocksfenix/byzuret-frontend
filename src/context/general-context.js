@@ -25,7 +25,6 @@ export default (props) => {
     // TODO: handle response here!
     console.log(res)
   }
-
   return (
     <GeneralContext.Provider value={{
       isLoggedIn,

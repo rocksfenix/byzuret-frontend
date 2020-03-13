@@ -1,11 +1,9 @@
 import axios from 'axios'
 import { getItem, setItem, removeItem } from './localStorage'
 
-const HOST = 'http://localhost:4000'
+const HOST = process.env.API_HOST || 'https://byzuret-api.now.sh'
 
-// process.env !== 'production'
-//   ? 'http://localhost:4000'
-//   : 'https://byzuret-api.now.sh'
+console.log('HOST', HOST)
 
 axios.interceptors.request.use((config) => {
   return {
@@ -68,7 +66,6 @@ export const Design = {
   },
 
   async postImage ({ design, formData }, config) {
-    debugger
     const res = await axios.post(`${HOST}/design/${design._id}/image`, formData, {
       ...config,
       headers: {
@@ -106,6 +103,12 @@ export const Image = {
 export const General = {
   async rebuild () {
     const res = await axios.post(`${HOST}/rebuild`)
+    return res.data
+  },
+
+  async contactForm (data) {
+    console.log(HOST)
+    const res = await axios.post(`${HOST}/contact-form`, { data })
     return res.data
   }
 }
