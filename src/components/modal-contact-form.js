@@ -62,7 +62,7 @@ const Button = styled.button`
 `
 
 const Input = styled.input`
-  border: 1px solid gray;
+  border: 1px solid #d1d1d1;
   width: 100%;
   margin: 0.4em 0;
   font-size: 18px;
@@ -128,7 +128,6 @@ const ModalContactForm = ({ show, onClose, design }) => {
   const formik = useFormik({
     initialValues: {
       fullname: '',
-      password: '',
       email: ''
     },
 
@@ -137,13 +136,13 @@ const ModalContactForm = ({ show, onClose, design }) => {
     onSubmit: async (formData) => {
 
       console.log(formData)
-      const { ok } = await api.General.contactForm({
+      const { success } = await api.General.contactForm({
         ...formData,
         design,
         recaptchaToken
       })
 
-      if (ok) {
+      if (success) {
         setSuccess(true)
       }
     }
