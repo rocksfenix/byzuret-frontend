@@ -56,6 +56,8 @@ export const Design = {
       ? `&text=${text}`
       : ''
 
+    console.log('DESIGN', `${HOST}/designs?skip=${skip}${query}`)
+
     const res = await axios.get(`${HOST}/designs?skip=${skip}${query}`)
     return res.data
   },
